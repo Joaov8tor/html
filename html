@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Key - ESP Script</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        #panel {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        #keyDisplay {
+            font-weight: bold;
+            color: #333;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function generateKey() {
+            // Gera uma key aleatória
+            const key = Math.random().toString(36).substr(2, 10).toUpperCase();
+            document.getElementById("keyDisplay").innerText = key;
+            updateScriptCode(key);
+        }
+
+        function updateScriptCode(key) {
+            // Código do script com a nova key embutida
+            const scriptCode = `-- Script ESP com Key
+local key = "${key}"
+if key ~= "${key}" then
+    error("Chave incorreta. Acesse o site para obter a chave atual.")
+end
+-- código do ESP aqui...`;
+            document.getElementById("scriptCode").innerText = scriptCode;
+        }
+
+        function copyToClipboard() {
+            const scriptText = document.getElementById("scriptCode").innerText;
+            navigator.clipboard.writeText(scriptText).then(() => {
+                alert("Código copiado para a área de transferência!");
+            });
+        }
+
+        window.onload = generateKey;
+    </script>
+</head>
+<body>
+    <h1>Gerador de Key - ESP Script</h1>
+    <div id="panel">
+        <p>Chave do dia:</p>
+        <p id="keyDisplay"></p>
+        <button class="button" onclick="copyToClipboard()">Copiar Código do Script</button>
+        <pre id="scriptCode" style="text-align: left; margin-top: 20px; background: #f4f4f4; padding: 15px; border-radius: 5px;"></pre>
+    </div>
+</body>
+</html>
